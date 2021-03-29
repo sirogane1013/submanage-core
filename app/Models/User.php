@@ -30,4 +30,32 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * get children Services
+     * 
+     * @return Collection
+     */
+    public function services() {
+        return $this->hasMany(Service::class);
+    }
+
+    /**
+     * Add a service.
+     * 
+     * @param string $name
+     * @param int $price
+     * @param int $category_id
+     * @return Service
+     */
+    public function addService($name, $price, $category_id) {
+        $service = new Service([
+            'user_id' => $this->id,
+            'name' => $name,
+            'price' => $price,
+            'category_id' => $category_id,
+        ]);
+
+        $service->save();
+    }
 }

@@ -23,8 +23,9 @@ class LoginTest extends TestCase
     /**
      * ログインするテスト
      * 
-     * 1. /sanctum/csrf-cookieにGETし、CSRFトークンが返ることを確認
-     * TODO:以降を書く
+     * 1. /api/user/registerよりユーザー登録
+     * 2. /sanctum/csrf-cookieにGETし、CSRFトークンが返ることを確認
+     * 3. /api/user/loginにGETしてログイン
      *
      * @return void
      */
@@ -33,8 +34,15 @@ class LoginTest extends TestCase
         $email = 'test@gmail.com';
         $password = 'password';
 
-        $response = $this->get('/sanctum/csrf-cookie');
-        $response->assertCookie('XSRF-TOKEN');
+        $register_response = $this->post('/api/user/register', [
+            'email' => $email,
+            'password' => $password,
+        ]);
 
+        $csrf_response = $this->get('/sanctum/csrf-cookie');
+        $csrf_response->assertCookie('XSRF-TOKEN');
+
+        $response = $this->get('/api/user/login?email='.$email.'&password='.$password);
+        $response->assertOk();
     }
 }

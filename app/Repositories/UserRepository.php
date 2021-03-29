@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Models\Service;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -21,5 +22,15 @@ class UserRepository implements UserRepositoryInterface
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * Get user by id.
+     * 
+     * @param int $id
+     * @return User
+     */
+    public function getUserById($id) {
+        return User::find($id);
     }
 }

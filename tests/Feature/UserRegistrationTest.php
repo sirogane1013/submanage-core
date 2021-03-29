@@ -41,12 +41,12 @@ class UserRegistrationTest extends TestCase
             'password' => $password
         ]);
 
+        $response->assertStatus(200);
+
         $this->assertDatabaseHas('users', [
             'email' => $email,
         ]);
         $user = \App\Models\User::where('email', $email)->first();
         $this->assertTrue(Hash::check($password, $user->password));
-
-        $response->assertStatus(200);
     }
 }
