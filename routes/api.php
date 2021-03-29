@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/user/login', 'App\Http\Controllers\Api\UserController@authenticate')->middleware('web');
 Route::post('/user/register', 'App\Http\Controllers\Api\UserController@register');
