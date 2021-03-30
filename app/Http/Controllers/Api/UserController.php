@@ -29,7 +29,7 @@ class UserController extends Controller
             return response('OK', 200);
         }
 
-        return response('NG', 402);
+        return response('NG', 403);
     }
 
     /**
