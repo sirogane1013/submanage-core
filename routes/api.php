@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/session-check', function() {
+    if (! Auth::check()) {
+        return response('Unauthorized', 401);
+    }
+    return response('OK', 200);
+});
+
 Route::post('/user/login', 'App\Http\Controllers\Api\UserController@authenticate')
     ->middleware('web')
-    ->name('login')
-;
+    ->name('login');
+
+Route::get('/user/logout', 'App\Http\Controllers\Api\UserController@logout')
+    ->middleware('web')
+    ->name('logout');
+
 Route::post('/user/register', 'App\Http\Controllers\Api\UserController@register')
-    ->name('register')
-;
+    ->name('register');
+
 Route::group(['prefix' => 'service', 'middleware' => ['auth:sanctum']], function () {
     Route::get('list', 'App\Http\Controllers\Api\ServiceController@list');
     Route::post('add', 'App\Http\Controllers\Api\ServiceController@add');

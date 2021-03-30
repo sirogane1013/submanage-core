@@ -45,4 +45,14 @@ class UserController extends Controller
         );
         return response('OK', 200);
     }
+
+    /**
+     * logout user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logout() {
+        Auth::logout();
+        return response('OK', 200);
+    }
 }
