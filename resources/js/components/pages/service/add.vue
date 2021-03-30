@@ -9,8 +9,8 @@
             </div>
              <div>
                 <label>カテゴリ</label>
-                <input type="number" v-model="category" />
-                <span v-if="errors.category">
+                <input type="number" v-model="category_id" />
+                <span v-if="errors.category_id">
                     {{ errors.category[0] }}
                 </span>
             </div>
