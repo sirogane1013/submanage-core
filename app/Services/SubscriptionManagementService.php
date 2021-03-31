@@ -14,6 +14,27 @@ class SubscriptionManagementService implements SubscriptionManagementServiceInte
     }
 
     /**
+     * Return aggrecated information for user.
+     * 
+     * @param User $user
+     * @return array
+     */
+    public function aggregation($user) {
+        return [
+            'user_id' => $user->id,
+            'total_amount' => $user->services->sum('price'),
+            'breakdowns' => $user->services
+                ->groupby('category_id')
+                ->map(function ($group) {
+                    return [
+                        'category_id' => $group->first()->category_id,
+                        'sum' => $group->sum('price'),
+                    ];
+                }),
+        ];
+    }
+
+    /**
      * List all registered services for the user.
      * 
      * @param User $user

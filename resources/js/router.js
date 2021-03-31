@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
 
+import store from './store'
+
 import information from './components/pages/information'
 import login from './components/pages/login'
 import mypage from './components/pages/mypage'
@@ -46,4 +48,11 @@ const router = new VueRouter({
     ]
 });
  
+router.beforeEach((to, from, next) => {
+    if (to.name !== 'login' && ! store.state.isLoggedIn)
+        next({name: 'login'});
+    else
+        next();
+});
+
 export default router;

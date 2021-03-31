@@ -5,6 +5,14 @@ namespace App\Services;
 interface SubscriptionManagementServiceInterface
 {
     /**
+     * Return aggrecated information for user.
+     * 
+     * @param User $user
+     * @return array
+     */
+    public function aggregation($user);
+    
+    /**
      * List all registered services for the user.
      * 
      * @param User $user

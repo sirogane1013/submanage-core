@@ -14,6 +14,18 @@ class ServiceController extends Controller
     }
 
     /**
+     * show agregated service data.
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function aggregation(Request $request) {
+        $aggregation = $this->management_service->aggregation(Auth::user());
+
+        return response()->json($aggregation);
+    }
+
+    /**
      * show registered services.
      * 
      * @param  \Illuminate\Http\Request $request

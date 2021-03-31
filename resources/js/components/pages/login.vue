@@ -33,6 +33,8 @@
     }
 </style>
 <script>
+import store from '../../store'
+
 export default {
     name: 'login',
     data() {
@@ -52,6 +54,7 @@ export default {
                     })
                     .then(response => {
                         console.log(response);
+                        store.login();
                         this.$router.push("/mypage");
                     })
                     .catch(error => {

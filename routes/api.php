@@ -34,6 +34,7 @@ Route::post('/user/register', 'App\Http\Controllers\Api\UserController@register'
     ->name('register');
 
 Route::group(['prefix' => 'service', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('aggregation', 'App\Http\Controllers\Api\ServiceController@aggregation');
     Route::get('list', 'App\Http\Controllers\Api\ServiceController@list');
     Route::post('add', 'App\Http\Controllers\Api\ServiceController@add');
     Route::delete('delete', 'App\Http\Controllers\Api\ServiceController@delete');

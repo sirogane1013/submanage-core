@@ -70,6 +70,8 @@ export default({
             categories: [
                 { text: 'Select One', value: null }, 
                 { text: '動画', value: 0 },
+                { text: '食事', value: 1 },
+                { text: 'ショッピング', value: 2 },
             ],
         };
     },
