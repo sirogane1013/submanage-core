@@ -1,31 +1,53 @@
 <template>
     <b-container class="wrapper">
         <b-card title="マイページ">
-            <p>{{ total_amount }}</p>
-            <p v-for="breakdown in breakdowns" :key="breakdown.category_id">
-                {{breakdown.category_id}}
-                {{breakdown.sum}}
-            </p>
+            <b-card title="今月の使用金額">
+                ¥{{ total_amount }}
+            </b-card>
+            <b-card title="内訳">
+                <chart :chartData="chartData" />
+            </b-card>
         </b-card>
     </b-container>
 </template>
 <script>
 
+import Chart from '../modules/Chart'
+
 export default({
     name: 'mypage',
+    components: {
+        Chart,
+    },
     data() {
         return {
-            'total_amount': 0,
-            'breakdowns': [],
+            total_amount: 0,
+            breakdowns: [],
+            categories: {
+                0: "動画",
+                1: "食事",
+                2: "ショッピング",
+            }
         }
     },
-    created() {
-        axios
-            .get('/api/service/aggregation')
-            .then(response => {
-                this.total_amount = response.data.total_amount;
-                this.breakdowns = response.data.breakdowns;
-            })
+    computed: {
+        chartData() {
+            const parsed = JSON.parse(JSON.stringify(this.breakdowns));
+            console.log(parsed);
+            console.log(Object.keys(parsed));
+            return {
+                labels: Object.keys(parsed).map(v => this.categories[v]),
+                datasets: [{
+                    label: "使用金額",
+                    data: Object.values(parsed),
+                }],
+            }
+        }
+    },
+    async mounted() {
+        let { data } = await axios.get('/api/service/aggregation');
+        this.total_amount = data.total_amount;
+        this.breakdowns = data.breakdowns;
     },
 })
 </script>

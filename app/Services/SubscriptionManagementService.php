@@ -26,10 +26,7 @@ class SubscriptionManagementService implements SubscriptionManagementServiceInte
             'breakdowns' => $user->services
                 ->groupby('category_id')
                 ->map(function ($group) {
-                    return [
-                        'category_id' => $group->first()->category_id,
-                        'sum' => $group->sum('price'),
-                    ];
+                    return $group->sum('price');
                 }),
         ];
     }
