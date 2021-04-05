@@ -39,4 +39,16 @@ interface SubscriptionManagementServiceInterface
      * @throws AuthorizationException
      */
     public function delete($id);
+
+    /**
+     * Update a subscription service.
+     * 
+     * @param int $id
+     * @param string $name
+     * @param int $price
+     * @param int $category_id
+     * @return Service
+     * @throws AuthorizationException
+     */
+    public function update($id, $name, $price, $category_id);
 }

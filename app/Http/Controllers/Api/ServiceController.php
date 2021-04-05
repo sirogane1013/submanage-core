@@ -67,4 +67,21 @@ class ServiceController extends Controller
 
         return response('OK', 200);
     }
+
+    /**
+     * update service.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request) {
+        $this->management_service->update(
+            (int) $request->input('id'),
+            $request->input('name'),
+            $request->input('price'),
+            $request->input('category_id')
+        );
+
+        return response('OK', 200);
+    }
 }

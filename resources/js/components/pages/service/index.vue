@@ -91,20 +91,61 @@
                 </b-card-header>
                 <b-collapse :id="`accordion-`+i" accordion="services" role="tabpanel">
                     <b-card-body>
-                        <dl>
-                            <dt>名前</dt>
-                            <dd>{{ service.name }}</dd>
-                            <dt>カテゴリ</dt>
-                            <dd>{{ categories[service.category_id].text }}</dd>
-                            <dt>価格</dt>
-                            <dd>¥{{ service.price }}</dd>
-                        </dl>
+                        <b-form-group
+                            :id="'input-group-'+i+'1'"
+                            label="サービス名"
+                            :label-for="'input-'+i+'1'"
+                        >
+                            <b-form-input
+                            :id="'input-'+i+'1'"
+                            v-model="service.name"
+                            type="text"
+                            placeholder="サービス名"
+                            required
+                            />
+                        </b-form-group>
+                        <b-form-group
+                            :id="'input-group-'+i+'2'"
+                            label="カテゴリ"
+                            :label-for="'input-'+i+'2'"
+                        >
+                            <b-form-select
+                                :id="'input-'+i+'2'"
+                                v-model="service.category_id"
+                                :options="categories"
+                                required
+                            />
+                        </b-form-group>
+                        <b-form-group
+                            :id="'input-group-'+i+'3'"
+                            label="値段"
+                            :label-for="'input-'+i+'3'"
+                        >
+                            <b-input-group prepend="¥">
+                                <b-form-input
+                                    :id="'input-'+i+'3'"
+                                    v-model="service.price"
+                                    type="number"
+                                    placeholder="Price"
+                                    required
+                                />
+                            </b-input-group>
+                        </b-form-group>
                     </b-card-body>
                     <b-card-footer>
                         <b-button
-                            @click="deleteService(service.id)"
+                            block
+                            variant="primary"
+                            @click="updateService(service.id, service.name, service.price, service.category_id)"
+                            v-b-toggle="`accordion-`+i"
+                        >
+                            更新
+                        </b-button>
+                        <b-button
                             block
                             variant="danger"
+                            @click="deleteService(service.id)"
+                            v-b-toggle="`accordion-`+i"
                         >
                             削除
                         </b-button>
@@ -176,6 +217,19 @@ export default({
                 })
                 .then(response => {
                     this.services = this.services.filter(s => s.id != service_id );
+                })
+        },
+        updateService(service_id, name, price, category_id) {
+            axios
+                .delete('/api/service/update', {
+                    data: {
+                        id: service_id,
+                        name: name,
+                        price: price,
+                        category_id: category_id,
+                    },      
+                })
+                .then(response => {
                 })
         },
     }

@@ -74,4 +74,28 @@ class SubscriptionManagementService implements SubscriptionManagementServiceInte
         
         return $service->delete();
     }
+
+    /**
+     * Update a subscription service.
+     * 
+     * @param int $id
+     * @param string $name
+     * @param int $price
+     * @param int $category_id
+     * @return Service
+     * @throws AuthorizationException
+     */
+    public function update($id, $name, $price, $category_id) {
+        $service = $this->service_repository->getServiceById($id);
+        if (! Gate::allows('update-service', $service)) {
+            throw new AuthorizationException;
+        }
+
+        $service->name = $name;
+        $service->price = $price;
+        $service->category_id = $category_id;
+        $service->save();
+
+        return $service;
+    }
 }

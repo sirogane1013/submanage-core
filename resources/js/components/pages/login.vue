@@ -41,7 +41,6 @@ export default {
         return {
             email: "",
             password: "",
-            errors: []
         };
     },
     methods: {
@@ -57,7 +56,7 @@ export default {
                         this.$router.push("/mypage");
                     })
                     .catch(error => {
-                        this.errors = error.response.data.errors;
+                        console.log(error.response.status)
                     });
             });
         }
