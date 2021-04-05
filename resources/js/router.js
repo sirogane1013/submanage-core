@@ -10,7 +10,6 @@ import login from './components/pages/login'
 import mypage from './components/pages/mypage'
 import register from './components/pages/register'
 import service from './components/pages/service/index'
-import serviceAdd from './components/pages/service/add'
 
 const router = new VueRouter({
     mode: "history",
@@ -39,11 +38,6 @@ const router = new VueRouter({
             path: "/service",
             name: "service",
             component: service,
-        },
-        {
-            path: "/service/add",
-            name: "service/add",
-            component: serviceAdd,
         },
     ]
 });

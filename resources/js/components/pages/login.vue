@@ -53,7 +53,6 @@ export default {
                         password: this.password
                     })
                     .then(response => {
-                        console.log(response);
                         store.login();
                         this.$router.push("/mypage");
                     })
